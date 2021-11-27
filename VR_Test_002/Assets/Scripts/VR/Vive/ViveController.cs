@@ -19,6 +19,8 @@ public class ViveController : VRController
     private GameObject triggerButtonIndic = null;
     private TextMeshPro textMeshBatteryLevel = null;
 
+    private Transform comTransform = null;
+
 
     private InputDevice targetDevice;
     private bool deviceValid = false;
@@ -60,6 +62,7 @@ public class ViveController : VRController
             updateTrackpadButton();
             updateTriggerButton();
             updateBatteryLevel();
+            updateCenterOfMAss();
         }
     }
 
@@ -86,7 +89,9 @@ public class ViveController : VRController
         targetDevice.TryGetFeatureValue(CommonUsages.deviceRotation, out controllerRotation);
 
         targetDevice.TryGetFeatureValue(CommonUsages.deviceVelocity, out controllerVelocity);
-        targetDevice.TryGetFeatureValue(CommonUsages.deviceAngularVelocity, out controllerAngularVelocity);
+        Vector3 tempAngVel;
+        targetDevice.TryGetFeatureValue(CommonUsages.deviceAngularVelocity, out tempAngVel);
+        controllerAngularVelocity = new Vector3(-tempAngVel.x, tempAngVel.y, -tempAngVel.z);
         targetDevice.TryGetFeatureValue(CommonUsages.deviceAcceleration, out controllerAcceleration);
         targetDevice.TryGetFeatureValue(CommonUsages.deviceAngularAcceleration, out controllerAngularAcceleration);
 
@@ -120,11 +125,16 @@ public class ViveController : VRController
 
     private void updateBatteryLevel()
     {
-        //textMeshBatteryLevel.text = Velocity.x.ToString("n3") + "\n"
-        //                             + Velocity.y.ToString("n3") + "\n"
-        //                             + Velocity.z.ToString("n3");
+        textMeshBatteryLevel.text = AngularVelocity.x.ToString("n3") + "\n"
+                                     + AngularVelocity.y.ToString("n3") + "\n"
+                                     + AngularVelocity.z.ToString("n3");
 
         //textMeshBatteryLevel.text = BatteryLevel.ToString("n5");
+    }
+
+    private void updateCenterOfMAss()
+    {
+        controllerCenterOfMass = comTransform.position;
     }
 
     private void getDevice()
@@ -168,6 +178,10 @@ public class ViveController : VRController
             else if (children[i].name == "Text Battery Level")
             {
                 textMeshBatteryLevel = children[i].GetComponent<TextMeshPro>();
+            }
+            else if (children[i].name == "COM")
+            {
+                comTransform = children[i];
             }
         }
     }

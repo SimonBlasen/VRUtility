@@ -15,6 +15,8 @@ public class ExampleObjectsSpawner : MonoBehaviour
 
     private float counter = 0f;
 
+    private VRInteractableGrab lastObject = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,13 +26,26 @@ public class ExampleObjectsSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        counter += Time.deltaTime;
-        if (counter >= spawnTime)
+        if (lastObject == null)
         {
-            counter = 0f;
+            counter += Time.deltaTime;
+            if (counter >= spawnTime)
+            {
+                counter = 0f;
 
-            spawnObject();
+                spawnObject();
+            }
         }
+        else
+        {
+            if (Vector3.Distance(lastObject.transform.position, transform.position) >= 0.3f)
+            {
+                Destroy(lastObject.gameObject, 60f);
+                lastObject = null;
+                counter = 0f;
+            }
+        }
+
     }
 
     private void spawnObject()
@@ -40,7 +55,6 @@ public class ExampleObjectsSpawner : MonoBehaviour
         GameObject instObj = Instantiate(prefabs[spawnPrefabIndex]);
         instObj.transform.position = spawnPos.position;
 
-
-        Destroy(instObj, destoryAfter);
+        lastObject = instObj.GetComponent<VRInteractableGrab>();
     }
 }
