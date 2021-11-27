@@ -7,6 +7,7 @@ public class VRController : MonoBehaviour
     [SerializeField]
     private Transform interactPivot = null;
 
+    private Rigidbody interactPivotRig = null;
 
 
     private bool areControlsPulled = false;
@@ -16,7 +17,7 @@ public class VRController : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
-        
+        interactPivotRig = interactPivot.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -35,6 +36,14 @@ public class VRController : MonoBehaviour
         get
         {
             return interactPivot;
+        }
+    }
+
+    public Rigidbody InteractPivotRigidbody
+    {
+        get
+        {
+            return interactPivotRig;
         }
     }
 

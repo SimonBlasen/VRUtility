@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class VRInteractableGrab : VRInteractable
 {
+    [SerializeField]
+    private MeshRenderer hoverMesh = null;
+    [SerializeField]
+    private Color nearObject;
+    [SerializeField]
+    private Color atObject;
+
     public bool refresh = false;
 
     private VRController[] vrControllers = null;
@@ -20,6 +27,9 @@ public class VRInteractableGrab : VRInteractable
     {
         rigidbody = GetComponent<Rigidbody>();
         vrControllers = FindObjectsOfType<VRController>();
+
+        Material matCopy = new Material(hoverMesh.sharedMaterial);
+        hoverMesh.sharedMaterial = matCopy;
 
         base.Start();
     }
@@ -41,27 +51,55 @@ public class VRInteractableGrab : VRInteractable
 
         if (!isGrabbed)
         {
+            bool noControllerNear = true;
             for (int i = 0; i < vrControllers.Length; i++)
             {
-                if (vrControllers[i].TriggerButtonDown && Vector3.Distance(transform.position, vrControllers[i].InteractPivot.position) <= interactDistance)
+                float distanceToController = Vector3.Distance(transform.position, vrControllers[i].InteractPivot.position);
+
+                if (vrControllers[i].TriggerButtonDown && distanceToController <= interactDistance)
                 {
                     isGrabbed = true;
                     grabbedController = vrControllers[i];
+
+                    transform.position = grabbedController.InteractPivot.position;
+                    FixedJoint fixedJoint = gameObject.AddComponent<FixedJoint>();
+                    fixedJoint.connectedBody = grabbedController.InteractPivotRigidbody;
                 }
+                if (vrControllers[i].TriggerButton == false && distanceToController <= interactDistance * 2f)
+                {
+                    noControllerNear = false;
+                    hoverMesh.enabled = true;
+
+                    float colorLerp = (interactDistance * 2f - distanceToController) / interactDistance;
+                    colorLerp = Mathf.Clamp(colorLerp, 0f, 1f);
+                    hoverMesh.sharedMaterial.color = Color.Lerp(nearObject, atObject, colorLerp);
+                }
+            }
+
+            if (noControllerNear)
+            {
+                hoverMesh.enabled = false;
             }
         }
 
 
         if (isGrabbed)
         {
-            transform.position = grabbedController.InteractPivot.position;
-            transform.rotation = grabbedController.InteractPivot.rotation;
+            //transform.position = grabbedController.InteractPivot.position;
+            //transform.rotation = grabbedController.InteractPivot.rotation;
 
             if (grabbedController.TriggerButtonUp)
             {
+
+
                 if (rigidbody != null)
                 {
-                    rigidbody.velocity = grabbedController.Velocity;
+
+                    Debug.Log("Settings velocity");
+                    FixedJoint fixedJoint = transform.GetComponent<FixedJoint>();
+                    DestroyImmediate(fixedJoint);
+
+                    rigidbody.velocity =  grabbedController.Velocity;
                     rigidbody.angularVelocity = grabbedController.AngularVelocity;
                 }
 
