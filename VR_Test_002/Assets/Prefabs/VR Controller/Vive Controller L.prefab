@@ -305,6 +305,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactPivot: {fileID: 2552365188936159793}
   isLeftHand: 1
+  animCurveVel:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.7410984
+      outSlope: 1.7410984
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17282248
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.4255521
+      value: 4.8395653
+      inSlope: 9.02255
+      outSlope: 9.02255
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3232826057231987197
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,9 +6,6 @@ using UnityEngine.XR;
 
 public class ViveController : VRController
 {
-    [SerializeField]
-    private bool isLeftHand = false;
-
     private float trackpadMaxPos = 0.01761f;
     private float triggerAngle = -22.446f;
     private float menuButtonDistance = -0.0021f;

@@ -6,18 +6,51 @@ public class VRController : MonoBehaviour
 {
     [SerializeField]
     private Transform interactPivot = null;
+    [SerializeField]
+    protected bool isLeftHand = false;
 
     private Rigidbody interactPivotRig = null;
-
 
     private bool areControlsPulled = false;
 
     private bool triggerDown = false;
 
+    public AnimationCurve animCurveVel;
+
+
     // Start is called before the first frame update
     protected void Start()
     {
         interactPivotRig = interactPivot.GetComponent<Rigidbody>();
+
+        if (isLeftHand)
+        {
+            vrControllerL = this;
+            for (int i = 0; i < vrControllerInits.Count; i++)
+            {
+                if (vrControllerInitsLeftHand[i])
+                {
+                    vrControllerInits[i].Inited(vrControllerL);
+                    vrControllerInits.RemoveAt(i);
+                    vrControllerInitsLeftHand.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+        else
+        {
+            vrControllerR = this;
+            for (int i = 0; i < vrControllerInits.Count; i++)
+            {
+                if (!vrControllerInitsLeftHand[i])
+                {
+                    vrControllerInits[i].Inited(vrControllerR);
+                    vrControllerInits.RemoveAt(i);
+                    vrControllerInitsLeftHand.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -434,5 +467,28 @@ public class VRController : MonoBehaviour
         controllerValueTriggerButtonPrev = controllerValueTriggerButton;
 
         areControlsPulled = true;
+    }
+
+
+    private static VRController vrControllerL = null;
+    private static VRController vrControllerR = null;
+
+    private static List<VRControllerInit> vrControllerInits = new List<VRControllerInit>();
+    private static List<bool> vrControllerInitsLeftHand = new List<bool>();
+    public static void RegisterInit(VRControllerInit vrControllerInit, bool leftHand)
+    {
+        if (leftHand && vrControllerL != null)
+        {
+            vrControllerInit.Inited(vrControllerL);
+            return;
+        }
+        if (!leftHand && vrControllerR != null)
+        {
+            vrControllerInit.Inited(vrControllerR);
+            return;
+        }
+
+        vrControllerInits.Add(vrControllerInit);
+        vrControllerInitsLeftHand.Add(leftHand);
     }
 }

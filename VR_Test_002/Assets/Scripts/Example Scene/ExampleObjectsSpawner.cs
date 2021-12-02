@@ -53,6 +53,10 @@ public class ExampleObjectsSpawner : MonoBehaviour
         int spawnPrefabIndex = Random.Range(0, prefabs.Length);
 
         GameObject instObj = Instantiate(prefabs[spawnPrefabIndex]);
+        if (instObj.GetComponent<Rigidbody>() != null)
+        {
+            instObj.GetComponent<Rigidbody>().maxAngularVelocity = float.PositiveInfinity;
+        }
         instObj.transform.position = spawnPos.position;
 
         lastObject = instObj.GetComponent<VRInteractableGrab>();

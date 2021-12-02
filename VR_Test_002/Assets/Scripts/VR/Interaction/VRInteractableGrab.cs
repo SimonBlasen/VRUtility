@@ -131,16 +131,23 @@ public class VRInteractableGrab : VRInteractable
                 if (rigidbody != null)
                 {
                     Vector3 velocityForward = Vector3.Cross(grabbedController.AngularVelocitySmoothed(smoothTime), transform.position - grabbedController.CenterOfMass);
-                    Debug.Log(((transform.position - grabbedController.CenterOfMass) * 10f).ToString());
+                    //Debug.Log(((transform.position - grabbedController.CenterOfMass) * 10f).ToString());
 
 
-                    Debug.Log("Settings velocity");
+                    //Debug.Log("Settings velocity");
                     FixedJoint fixedJoint = transform.GetComponent<FixedJoint>();
                     DestroyImmediate(fixedJoint);
 
                     //rigidbody.velocity =  grabbedController.Velocity;
                     rigidbody.velocity = velocityForward + grabbedController.VelocitySmoothed(smoothTime);
-                    rigidbody.angularVelocity = grabbedController.AngularVelocitySmoothed(smoothTime);
+
+                    Vector3 correctedAngVel = grabbedController.AngularVelocitySmoothed(smoothTime);
+                    float mag = correctedAngVel.magnitude;
+                    //correctedAngVel = correctedAngVel.normalized * grabbedController.animCurveVel.Evaluate(mag);
+
+                    Debug.Log(mag.ToString("n2"));
+
+                    rigidbody.angularVelocity = correctedAngVel;
                 }
 
 
