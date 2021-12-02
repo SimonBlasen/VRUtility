@@ -101,7 +101,9 @@ public class VRController : MonoBehaviour
     protected bool controllerValueTrackpadButton;
     protected bool controllerValueTrackpadButtonPrev;
     protected bool controllerValueTrackpadTouch;
+    protected bool controllerValueTrackpadTouchPrev;
     protected bool controllerValueMenuButton;
+    protected bool controllerValueMenuButtonPrev;
 
     protected float controllerGrip;
 
@@ -208,6 +210,30 @@ public class VRController : MonoBehaviour
         }
     }
 
+    public bool TrackpadTouchDown
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueTrackpadTouch && controllerValueTrackpadTouchPrev == false;
+        }
+    }
+
+    public bool TrackpadTouchUp
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueTrackpadTouch == false && controllerValueTrackpadTouchPrev;
+        }
+    }
+
     public bool TrackpadButton
     {
         get
@@ -253,6 +279,30 @@ public class VRController : MonoBehaviour
                 pullControllerValues();
             }
             return controllerValueMenuButton;
+        }
+    }
+
+    public bool MenuButtonDown
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueMenuButton && controllerValueMenuButtonPrev == false;
+        }
+    }
+
+    public bool MenuButtonUp
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueMenuButton == false && controllerValueMenuButtonPrev;
         }
     }
 
@@ -491,6 +541,9 @@ public class VRController : MonoBehaviour
     {
         controllerValueTriggerButtonPrev = controllerValueTriggerButton;
         controllerValueTrackpadButtonPrev = controllerValueTrackpadButton;
+        controllerValueTrackpadTouchPrev = controllerValueTrackpadTouch;
+
+        controllerValueMenuButtonPrev = controllerValueMenuButton;
 
         areControlsPulled = true;
     }

@@ -25,10 +25,13 @@ namespace Marbles
         private bool isTrackpadTouched = false;
         private float lastTrackpadX = 0f;
 
+        private IngameMenu ingameMenu = null;
+
         // Start is called before the first frame update
         void Start()
         {
             vrController = GetComponentInParent<VRController>();
+            ingameMenu = vrController.GetComponentInChildren<IngameMenu>();
             linesScaleup.Scale = Vector3.zero;
 
             objectsParentAnim.LocalPosition = objectsParentPosInvis.localPosition;
@@ -38,7 +41,7 @@ namespace Marbles
         // Update is called once per frame
         void Update()
         {
-            if (vrController.TrackpadButtonDown)
+            if (vrController.TrackpadButtonDown && (ingameMenu == null || ingameMenu.MenuOpened == false))
             {
                 MenuOpened = !MenuOpened;
             }

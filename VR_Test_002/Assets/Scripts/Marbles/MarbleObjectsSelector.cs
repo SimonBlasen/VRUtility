@@ -22,6 +22,12 @@ public class MarbleObjectsSelector : MonoBehaviour
     private float snapSpeed = 0.4f;
     [SerializeField]
     private float clampedMaxSnapSpeed = 0.4f;
+    [SerializeField]
+    private float objectsScale = 1f;
+    [SerializeField]
+    private float rotateLerpSpeed = 1f;
+    [SerializeField]
+    private float objectFrontRotationSpeed = 0.4f;
 
     [SerializeField]
     private GameObject[] prefabs = null;
@@ -40,6 +46,10 @@ public class MarbleObjectsSelector : MonoBehaviour
 
     private bool isSnapping = false;
     private float snapAngle = 0f;
+    private int oldIndexInFront = -1;
+
+    private float additionalRotation = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +62,7 @@ public class MarbleObjectsSelector : MonoBehaviour
             instances[i] = inst.transform;
             instances[i].localPosition = Vector3.zero;
             instances[i].localRotation = Quaternion.identity;
-            instances[i].localScale = new Vector3(1f, 1f, 1f);
+            instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale);
         }
 
         anglePerObject = Mathf.PI * 2f / instances.Length;
@@ -76,15 +86,29 @@ public class MarbleObjectsSelector : MonoBehaviour
 
         float lerpS = moveCurve.Evaluate(moveS);
 
+        if (oldIndexInFront != IndexInFront)
+        {
+            oldIndexInFront = IndexInFront;
+            additionalRotation = 0f;
+        }
+        additionalRotation += Time.deltaTime * objectFrontRotationSpeed;
+
         for (int i = 0; i < instances.Length; i++)
         {
             float angleHere = curAngle + anglePerObject * i;
             Vector3 posOnCircle = midPos + (new Vector3(Mathf.Sin(angleHere), 0f, -Mathf.Cos(angleHere))) * circleRadius;
             Vector3 posInFront = midPos + new Vector3(0f, 0f, -circleRadius);
 
+            float addAngle = i == IndexInFront ? additionalRotation : 0f;
+
+            if (addAngle != 0f)
+            {
+                Debug.Log("rot angle of [" + i.ToString() + "]: " + addAngle.ToString());
+            }
+
             instances[i].localPosition = Vector3.Lerp(posInFront, posOnCircle, lerpS);
-            instances[i].localRotation = Quaternion.Euler(0f, -angleHere * Mathf.Rad2Deg, 0f);
-            instances[i].localScale = new Vector3(1f, 1f, 1f) * scaleCurve.Evaluate(lerpS);
+            instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, Quaternion.Euler(0f, -angleHere * Mathf.Rad2Deg + addAngle, 0f), Time.deltaTime * rotateLerpSpeed);
+            instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale) * scaleCurve.Evaluate(lerpS);
             //instances[i].localPosition = midPos + (new Vector3(Mathf.Sin(angleHere), 0f, -Mathf.Cos(angleHere))) * curRadius;
         }
 
@@ -101,7 +125,6 @@ public class MarbleObjectsSelector : MonoBehaviour
         if (!HoldDownTrackpad)
         {
             float angleDiv = (curAngle / anglePerObject) + 0.5f;
-
             int clamped = (int)angleDiv;
             if (clamped < 0)
             {
@@ -134,6 +157,22 @@ public class MarbleObjectsSelector : MonoBehaviour
         {
             curAngle += snapDelta;
             elasticDelta = 0f;
+        }
+    }
+
+    public int IndexInFront
+    {
+        get
+        {
+            float angleDiv = (curAngle / anglePerObject) + 0.5f;
+            int clamped = (int)angleDiv;
+            if (clamped < 0)
+            {
+                int flipped = -clamped;
+                clamped = instances.Length - flipped;
+            }
+            clamped = clamped % instances.Length;
+            return (instances.Length - 1) - clamped;
         }
     }
 
