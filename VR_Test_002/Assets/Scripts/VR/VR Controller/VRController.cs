@@ -99,6 +99,7 @@ public class VRController : MonoBehaviour
     protected bool controllerValueTriggerButton;
     protected bool controllerValueTriggerButtonPrev;
     protected bool controllerValueTrackpadButton;
+    protected bool controllerValueTrackpadButtonPrev;
     protected bool controllerValueTrackpadTouch;
     protected bool controllerValueMenuButton;
 
@@ -216,6 +217,30 @@ public class VRController : MonoBehaviour
                 pullControllerValues();
             }
             return controllerValueTrackpadButton;
+        }
+    }
+
+    public bool TrackpadButtonDown
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueTrackpadButton && controllerValueTrackpadButtonPrev == false;
+        }
+    }
+
+    public bool TrackpadButtonUp
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            return controllerValueTrackpadButton == false && controllerValueTrackpadButtonPrev;
         }
     }
 
@@ -465,8 +490,17 @@ public class VRController : MonoBehaviour
     protected virtual void pullControllerValues()
     {
         controllerValueTriggerButtonPrev = controllerValueTriggerButton;
+        controllerValueTrackpadButtonPrev = controllerValueTrackpadButton;
 
         areControlsPulled = true;
+    }
+
+    public bool IsLeftHand
+    {
+        get
+        {
+            return isLeftHand;
+        }
     }
 
 

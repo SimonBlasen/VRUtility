@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 2fb08e385a6176e468932a65591ad1cb
+  - enabled: 1
+    path: Assets/Scenes/SimonScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Marble Scene.unity
+    guid: 2294933db294244479ab537050048220
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9c5cbcb2c13f950419ade2701f272b7c, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 41d58e7cf763eb74991651d4e58e2068, type: 2}

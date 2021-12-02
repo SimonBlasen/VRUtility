@@ -1,0 +1,3 @@
+[submodule "VR_TEST_002/Assets/SappAnim"]
+	path = VR_TEST_002/Assets/SappAnim
+	url = https://github.com/SimonBlasen/SappAnim.git
