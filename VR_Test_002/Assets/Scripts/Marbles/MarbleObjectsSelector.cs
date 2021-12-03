@@ -28,6 +28,10 @@ public class MarbleObjectsSelector : MonoBehaviour
     private float rotateLerpSpeed = 1f;
     [SerializeField]
     private float objectFrontRotationSpeed = 0.4f;
+    [SerializeField]
+    private float scaleupInFront = 1.2f;
+    [SerializeField]
+    private float scaleupInFrontLerpSpeed = 1.2f;
 
     [SerializeField]
     private GameObject[] prefabs = null;
@@ -35,6 +39,7 @@ public class MarbleObjectsSelector : MonoBehaviour
     private int currentIndex = 0;
     private bool isVisible = false;
     private Transform[] instances = null;
+    private Transform[] instanceParents = null;
 
     private float moveS = 0f;
 
@@ -48,21 +53,31 @@ public class MarbleObjectsSelector : MonoBehaviour
     private float snapAngle = 0f;
     private int oldIndexInFront = -1;
 
-    private float additionalRotation = 0f;
+    private Quaternion additionalRotation = Quaternion.identity;
 
 
     // Start is called before the first frame update
     void Start()
     {
         instances = new Transform[prefabs.Length];
+        instanceParents = new Transform[prefabs.Length];
 
         for (int i = 0; i < instances.Length; i++)
         {
-            GameObject inst = Instantiate(prefabs[i], parentTrans);
+            GameObject instParent = new GameObject("Parent");
+            instParent.transform.parent = parentTrans;
+            instanceParents[i] = instParent.transform;
+            instanceParents[i].localPosition = Vector3.zero;
+            instanceParents[i].localRotation = Quaternion.identity;
+            instanceParents[i].localScale = new Vector3(1f, 1f, 1f);
+
+            GameObject inst = Instantiate(prefabs[i], instanceParents[i]);
             instances[i] = inst.transform;
             instances[i].localPosition = Vector3.zero;
             instances[i].localRotation = Quaternion.identity;
             instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale);
+
+
         }
 
         anglePerObject = Mathf.PI * 2f / instances.Length;
@@ -89,9 +104,13 @@ public class MarbleObjectsSelector : MonoBehaviour
         if (oldIndexInFront != IndexInFront)
         {
             oldIndexInFront = IndexInFront;
-            additionalRotation = 0f;
+            additionalRotation = Quaternion.identity;
+            Debug.Log("Index In Front: " + IndexInFront.ToString());
         }
-        additionalRotation += Time.deltaTime * objectFrontRotationSpeed;
+        additionalRotation *= Quaternion.Euler(0f, Time.deltaTime * objectFrontRotationSpeed, 0f);
+
+
+        Debug.Log("In front: " + IndexInFront.ToString());
 
         for (int i = 0; i < instances.Length; i++)
         {
@@ -99,16 +118,22 @@ public class MarbleObjectsSelector : MonoBehaviour
             Vector3 posOnCircle = midPos + (new Vector3(Mathf.Sin(angleHere), 0f, -Mathf.Cos(angleHere))) * circleRadius;
             Vector3 posInFront = midPos + new Vector3(0f, 0f, -circleRadius);
 
-            float addAngle = i == IndexInFront ? additionalRotation : 0f;
 
-            if (addAngle != 0f)
+            instanceParents[i].localPosition = Vector3.Lerp(posInFront, posOnCircle, lerpS);
+            instanceParents[i].localRotation = Quaternion.Euler(0f, -angleHere * Mathf.Rad2Deg, 0f);
+            instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale) * scaleCurve.Evaluate(lerpS);
+
+            if (i == IndexInFront)
             {
-                Debug.Log("rot angle of [" + i.ToString() + "]: " + addAngle.ToString());
+                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, additionalRotation, Time.deltaTime * rotateLerpSpeed);
+                instanceParents[i].localScale = Vector3.Lerp(instanceParents[i].localScale, new Vector3(scaleupInFront, scaleupInFront, scaleupInFront), Time.deltaTime * scaleupInFrontLerpSpeed);
+            }
+            else
+            {
+                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, Quaternion.identity, Time.deltaTime * rotateLerpSpeed);
+                instanceParents[i].localScale = Vector3.Lerp(instanceParents[i].localScale, new Vector3(1f, 1f, 1f), Time.deltaTime * scaleupInFrontLerpSpeed);
             }
 
-            instances[i].localPosition = Vector3.Lerp(posInFront, posOnCircle, lerpS);
-            instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, Quaternion.Euler(0f, -angleHere * Mathf.Rad2Deg + addAngle, 0f), Time.deltaTime * rotateLerpSpeed);
-            instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale) * scaleCurve.Evaluate(lerpS);
             //instances[i].localPosition = midPos + (new Vector3(Mathf.Sin(angleHere), 0f, -Mathf.Cos(angleHere))) * curRadius;
         }
 
@@ -124,7 +149,7 @@ public class MarbleObjectsSelector : MonoBehaviour
 
         if (!HoldDownTrackpad)
         {
-            float angleDiv = (curAngle / anglePerObject) + 0.5f;
+            float angleDiv = (curAngle / anglePerObject) + 0.5f + (curAngle < 0f ? -1f : 0f);
             int clamped = (int)angleDiv;
             if (clamped < 0)
             {
@@ -164,7 +189,7 @@ public class MarbleObjectsSelector : MonoBehaviour
     {
         get
         {
-            float angleDiv = (curAngle / anglePerObject) + 0.5f;
+            float angleDiv = (curAngle / anglePerObject) + 0.5f + (curAngle < 0f ? -1f : 0f);
             int clamped = (int)angleDiv;
             if (clamped < 0)
             {
@@ -172,7 +197,7 @@ public class MarbleObjectsSelector : MonoBehaviour
                 clamped = instances.Length - flipped;
             }
             clamped = clamped % instances.Length;
-            return (instances.Length - 1) - clamped;
+            return ((instances.Length) - clamped) % instances.Length;
         }
     }
 

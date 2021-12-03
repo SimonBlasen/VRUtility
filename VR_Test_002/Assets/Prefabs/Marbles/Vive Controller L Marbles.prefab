@@ -515,9 +515,11 @@ MonoBehaviour:
   elasticDeccelration: 15
   snapSpeed: 15
   clampedMaxSnapSpeed: 0.02
-  objectsScale: 0.75
-  rotateLerpSpeed: 1
-  objectFrontRotationSpeed: 0.4
+  objectsScale: 0.65
+  rotateLerpSpeed: 10
+  objectFrontRotationSpeed: 60
+  scaleupInFront: 1.7
+  scaleupInFrontLerpSpeed: 3
   prefabs:
   - {fileID: 3439243880210651857, guid: 470ce022c6faacf46b5d861ac5b8ce3c, type: 3}
   - {fileID: 779665297784275463, guid: 2b5be3717604275458bc879f8e45454e, type: 3}
