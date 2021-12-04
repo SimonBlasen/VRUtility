@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentTrans: {fileID: 5669222457819932763}
-  circleRadius: 0.24
+  circleRadius: 0.144
   moveCurve:
     serializedVersion: 2
     m_Curve:
@@ -517,7 +517,7 @@ MonoBehaviour:
   elasticDeccelration: 15
   snapSpeed: 15
   clampedMaxSnapSpeed: 0.02
-  objectsScale: 0.5
+  objectsScale: 0.3
   rotateLerpSpeed: 10
   objectFrontRotationSpeed: 60
   scaleupInFront: 1.7
@@ -1530,13 +1530,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416317367908727159}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: -0.0097, z: -0.0163}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3232826057082329012}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!54 &8436006208652668571
 Rigidbody:
   m_ObjectHideFlags: 0

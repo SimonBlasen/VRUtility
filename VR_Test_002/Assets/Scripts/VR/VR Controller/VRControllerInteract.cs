@@ -152,7 +152,7 @@ public class VRControllerInteract : MonoBehaviour
             HasItemInHand = false;
 
 
-            InteractableInHand.IsGrabbed = false;
+            InteractableInHand.RelaseGrab(VRController);
             if (InteractableInHand.Rigidbody != null)
             {
                 Vector3 velocityForward = Vector3.Cross(vrController.AngularVelocity, ItemInHAnd.position - vrController.CenterOfMass);
@@ -179,6 +179,6 @@ public class VRControllerInteract : MonoBehaviour
         ItemInHAnd = vrInteractableGrab.transform;
         HasItemInHand = true;
         InteractableInHand = vrInteractableGrab;
-        InteractableInHand.IsGrabbed = true;
+        InteractableInHand.PerformGrab(VRController);
     }
 }

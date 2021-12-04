@@ -12,6 +12,12 @@ public class VRInteractableGrab : VRInteractable
     private Color atObject;
 
 
+    public delegate void InteractableGrabbedEvent(VRController vrController);
+    public event InteractableGrabbedEvent InteractableGrabbed;
+
+    public delegate void InteractableReleasedEvent(VRController vrController);
+    public event InteractableReleasedEvent InteractableReleased;
+
     // Start is called before the first frame update
     protected new void Start()
     {
@@ -103,8 +109,22 @@ public class VRInteractableGrab : VRInteractable
 
     public bool IsGrabbed
     {
-        get; set;
+        get; protected set;
     } = false;
+
+    public void RelaseGrab(VRController vrController)
+    {
+        IsGrabbed = false;
+
+        InteractableReleased?.Invoke(vrController);
+    }
+
+    public void PerformGrab(VRController vrController)
+    {
+        IsGrabbed = true;
+
+        InteractableGrabbed?.Invoke(vrController);
+    }
 
 
     public override void Interact(VRController vrController)

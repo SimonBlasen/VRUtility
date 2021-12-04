@@ -37,6 +37,8 @@ public class MarbleTrackPieceFlying : MonoBehaviour
     {
         meshCollider = GetComponentInChildren<MeshCollider>();
         selfRig = GetComponent<Rigidbody>();
+
+        vrInteractableGrab.InteractableReleased += VrInteractableGrab_InteractableReleased;
     }
 
     // Update is called once per frame
@@ -63,6 +65,18 @@ public class MarbleTrackPieceFlying : MonoBehaviour
             Destroy(gosToDestroy[0]);
             gosToDestroy.RemoveAt(0);
         }
+
+        for (int i = 0; i < triggerRemoveAfter.Count; i++)
+        {
+            triggerRemoveAfter[i] -= Time.deltaTime;
+
+            if (triggerRemoveAfter[i] <= 0f)
+            {
+                triggeredPieces.RemoveAt(i);
+                triggerRemoveAfter.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -78,6 +92,87 @@ public class MarbleTrackPieceFlying : MonoBehaviour
                 Debug.Log("Snapping...");
                 snapTo(mtp, index0, index1);
             }
+        }
+    }
+
+    public List<MarbleTrackPiece> triggeredPieces = new List<MarbleTrackPiece>();
+    public List<float> triggerRemoveAfter = new List<float>();
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("MarbleRunning"))
+        {
+
+            MarbleTrackPiece mtp = other.transform.GetComponentInParent<MarbleTrackPiece>();
+            if (mtp != null)
+            {
+                //Debug.Log("Enter: " + other.gameObject.name);
+
+                if (triggeredPieces.Contains(mtp) == false)
+                {
+                    triggeredPieces.Add(mtp);
+                    triggerRemoveAfter.Add(1f);
+                }
+                for (int i = 0; i < triggeredPieces.Count; i++)
+                {
+                    if (triggeredPieces[i] == mtp)
+                    {
+                        triggerRemoveAfter[i] = 1f;
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+    
+    /*
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("MarbleRunning"))
+        {
+            MarbleTrackPiece mtp = other.transform.GetComponentInParent<MarbleTrackPiece>();
+            if (mtp != null)
+            {
+                Debug.Log("Leave: " + other.gameObject.name);
+                triggeredPieces.Remove(mtp);
+            }
+        }
+    }*/
+
+    private void VrInteractableGrab_InteractableReleased(VRController vrController)
+    {
+        Debug.Log("Triggers to consider: " + triggeredPieces.Count.ToString());
+        float minSnapDistance = float.MaxValue;
+        MarbleTrackPiece closestPiece = null;
+        int closestIndex0 = -1;
+        int closestIndex1 = -1;
+        for (int i = 0; i < triggeredPieces.Count; i++)
+        {
+            MarbleTrackPiece mtp = triggeredPieces[i];
+            if (mtp != null && !isSnapping)
+            {
+                float distance;
+                (int index0, int index1) = findClosestSnaps(this, mtp, out distance);
+
+                if (distance <= snapDistance)
+                {
+                    if (distance < minSnapDistance)
+                    {
+                        minSnapDistance = distance;
+                        closestPiece = mtp;
+                        closestIndex0 = index0;
+                        closestIndex1 = index1;
+                    }
+                }
+            }
+        }
+
+        if (closestPiece != null)
+        {
+            Debug.Log("Snapping trigger...");
+            snapTo(closestPiece, closestIndex0, closestIndex1);
         }
     }
 
