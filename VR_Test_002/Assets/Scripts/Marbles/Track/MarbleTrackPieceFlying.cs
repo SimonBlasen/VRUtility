@@ -32,6 +32,9 @@ public class MarbleTrackPieceFlying : MonoBehaviour
 
     private Rigidbody selfRig = null;
 
+    private float stillFor = 0f;
+    private Vector3 oldPos = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +78,24 @@ public class MarbleTrackPieceFlying : MonoBehaviour
                 triggeredPieces.RemoveAt(i);
                 triggerRemoveAfter.RemoveAt(i);
                 i--;
+            }
+        }
+
+        if (!isSnapping)
+        {
+            if (oldPos != transform.position)
+            {
+                stillFor = 0f;
+                oldPos = transform.position;
+            }
+            else
+            {
+                stillFor += Time.deltaTime;
+
+                if (stillFor >= 1.5f)
+                {
+                    finishSnapping(false);
+                }
             }
         }
     }
@@ -176,7 +197,7 @@ public class MarbleTrackPieceFlying : MonoBehaviour
         }
     }
 
-    private void finishSnapping()
+    private void finishSnapping(bool attachToOtherSnap = true)
     {
         Debug.Log("Snapped DONE");
         isSnapping = false;
@@ -189,13 +210,19 @@ public class MarbleTrackPieceFlying : MonoBehaviour
 
         mtp.Init();
         mtp.OwnPartId = OwnPartId;
-        mtp.SnapsOccupied[snapToOwnIndex] = true;
-        mtp.ConnectedPieces[snapToOwnIndex] = mtpToSnap;
 
-        mtpToSnap.SnapsOccupied[snapToOtherIndex] = true;
-        mtpToSnap.ConnectedPieces[snapToOtherIndex] = mtp;
+        if (attachToOtherSnap)
+        {
+            mtp.SnapsOccupied[snapToOwnIndex] = true;
+            mtp.ConnectedPieces[snapToOwnIndex] = mtpToSnap;
 
-        checkOtherSnapAttachements(mtp);
+            mtpToSnap.SnapsOccupied[snapToOtherIndex] = true;
+            mtpToSnap.ConnectedPieces[snapToOtherIndex] = mtp;
+
+            checkOtherSnapAttachements(mtp);
+        }
+
+
 
         Destroy(gameObject);
     }

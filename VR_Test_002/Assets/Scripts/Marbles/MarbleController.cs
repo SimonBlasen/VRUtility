@@ -115,6 +115,8 @@ namespace Marbles
             {
                 //instPartInHand.AddComponent<Rigidbody>();
                 instPartInHand.transform.parent = null;
+                instPartInHand.transform.localScale = new Vector3(1f, 1f, 1f);
+                inHandAnimScale.Scale = new Vector3(1f, 1f, 1f);
                 instPartInHand = null;
                 marbleObjectsSelector.IsPreviewVisible = true;
             }
