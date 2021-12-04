@@ -5,11 +5,9 @@ using UnityEngine;
 public class VRController : MonoBehaviour
 {
     [SerializeField]
-    private Transform interactPivot = null;
-    [SerializeField]
     protected bool isLeftHand = false;
-
-    private Rigidbody interactPivotRig = null;
+    [SerializeField]
+    protected float trackpadSwipeThresh = 0.2f;
 
     private bool areControlsPulled = false;
 
@@ -17,11 +15,17 @@ public class VRController : MonoBehaviour
 
     public AnimationCurve animCurveVel;
 
+    private VRControllerInteract vrControllerInteract = null;
+
 
     // Start is called before the first frame update
     protected void Start()
     {
-        interactPivotRig = interactPivot.GetComponent<Rigidbody>();
+        vrControllerInteract = GetComponent<VRControllerInteract>();
+        if (vrControllerInteract == null)
+        {
+            vrControllerInteract = gameObject.AddComponent<VRControllerInteract>();
+        }
 
         if (isLeftHand)
         {
@@ -56,7 +60,14 @@ public class VRController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-
+        if (TrackpadTouchDown)
+        {
+            controllerValueTrackpadPosDown = Trackpad;
+        }
+        if (TrackpadTouch && controllerValueTrackpad != Vector2.zero)
+        {
+            controllerValueTrackpadPosNotZero = controllerValueTrackpad;
+        }
     }
 
     private void LateUpdate()
@@ -73,25 +84,23 @@ public class VRController : MonoBehaviour
         bufferIndex++;
         bufferIndex = bufferIndex % bufferTimeDeltas.Length;
 
+
         areControlsPulled = false;
     }
 
-    public Transform InteractPivot
+
+
+    public VRControllerInteract VRControllerInteract
     {
-        get
+        get 
         {
-            return interactPivot;
+            return vrControllerInteract;
         }
     }
 
-    public Rigidbody InteractPivotRigidbody
-    {
-        get
-        {
-            return interactPivotRig;
-        }
-    }
 
+    private Vector2 controllerValueTrackpadPosDown;
+    private Vector2 controllerValueTrackpadPosNotZero;
 
     protected Vector2 controllerValueTrackpad;
     protected float controllerValueTrigger;
@@ -207,6 +216,90 @@ public class VRController : MonoBehaviour
                 pullControllerValues();
             }
             return controllerValueTrackpadTouch;
+        }
+    }
+
+    public bool TrackpadSwipeUp
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            if (TrackpadTouchUp)
+            {
+                Vector2 delta = controllerValueTrackpadPosNotZero - controllerValueTrackpadPosDown;
+
+                if (delta.y >= trackpadSwipeThresh)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public bool TrackpadSwipeDown
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            if (TrackpadTouchUp)
+            {
+                Vector2 delta = controllerValueTrackpadPosNotZero - controllerValueTrackpadPosDown;
+
+                if (delta.y <= -trackpadSwipeThresh)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public bool TrackpadSwipeRight
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            if (TrackpadTouchUp)
+            {
+                Vector2 delta = controllerValueTrackpadPosNotZero - controllerValueTrackpadPosDown;
+
+                if (delta.x >= trackpadSwipeThresh)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public bool TrackpadSwipeLeft
+    {
+        get
+        {
+            if (!areControlsPulled)
+            {
+                pullControllerValues();
+            }
+            if (TrackpadTouchUp)
+            {
+                Vector2 delta = controllerValueTrackpadPosNotZero - controllerValueTrackpadPosDown;
+
+                if (delta.x <= -trackpadSwipeThresh)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

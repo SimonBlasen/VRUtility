@@ -56,8 +56,8 @@ public class VRInteractableSpawn : VRInteractable
 
         if (isGrabbed)
         {
-            transform.position = grabbedController.InteractPivot.position;
-            transform.rotation = grabbedController.InteractPivot.rotation;
+            transform.position = grabbedController.VRControllerInteract.InteractPivot.position;
+            transform.rotation = grabbedController.VRControllerInteract.InteractPivot.rotation;
 
             if (grabbedController.TriggerButtonUp)
             {

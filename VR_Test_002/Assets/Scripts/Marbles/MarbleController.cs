@@ -18,32 +18,52 @@ namespace Marbles
         private Transform objectsParentPosInvis = null;
         [SerializeField]
         private MarbleObjectsSelector marbleObjectsSelector = null;
+        [SerializeField]
+        private Transform objectInHandParent = null;
 
         private VRController vrController = null;
+
+        private GameObject instPartInHand = null;
 
         private bool menuOpened = false;
         private bool isTrackpadTouched = false;
         private float lastTrackpadX = 0f;
+
+        private SappAnim inHandAnimScale = null;
 
         private IngameMenu ingameMenu = null;
 
         // Start is called before the first frame update
         void Start()
         {
+            inHandAnimScale = objectInHandParent.GetComponent<SappAnim>();
             vrController = GetComponentInParent<VRController>();
             ingameMenu = vrController.GetComponentInChildren<IngameMenu>();
             linesScaleup.Scale = Vector3.zero;
 
             objectsParentAnim.LocalPosition = objectsParentPosInvis.localPosition;
+            marbleObjectsSelector.IsPreviewVisible = true;
             //objectsParentAnim.Scale = Vector3.zero;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (vrController.TrackpadButtonDown && (ingameMenu == null || ingameMenu.MenuOpened == false))
+            if (!HasPartInHand && vrController.TrackpadButtonDown && (ingameMenu == null || ingameMenu.MenuOpened == false))
             {
                 MenuOpened = !MenuOpened;
+            }
+
+            if (!MenuOpened)
+            {
+                if (vrController.TrackpadSwipeLeft)
+                {
+                    marbleObjectsSelector.RotateSelectedObject(true);
+                }
+                else if (vrController.TrackpadSwipeRight)
+                {
+                    marbleObjectsSelector.RotateSelectedObject(false);
+                }
             }
 
 
@@ -73,6 +93,38 @@ namespace Marbles
             if (MenuOpened)
             {
                 marbleObjectsSelector.HoldDownTrackpad = vrController.TrackpadTouch;
+            }
+
+            if (!MenuOpened && vrController.TriggerButtonDown && !HasPartInHand && vrController.VRControllerInteract.GetNearestInteractableDistance() > vrController.VRControllerInteract.InteractDistance)
+            {
+                instPartInHand = Instantiate(MarbleParts.Inst.MarblePartPrefabs[marbleObjectsSelector.IndexInFront].prefabThrowing, objectInHandParent);
+                instPartInHand.GetComponent<MarbleTrackPieceFlying>().OwnPartId = marbleObjectsSelector.IndexInFront;
+                instPartInHand.transform.localPosition = Vector3.zero;
+                objectInHandParent.localRotation = Quaternion.Euler(0f, marbleObjectsSelector.SelectedPartRotation, 0f);
+                objectInHandParent.localScale = Vector3.zero;
+
+                inHandAnimScale.transform.localScale = Vector3.zero;
+                inHandAnimScale.Scale = Vector3.zero;
+                inHandAnimScale.Scale = new Vector3(1f, 1f, 1f);
+
+                instPartInHand.GetComponent<VRInteractable>().Interact(vrController);
+
+                marbleObjectsSelector.IsPreviewVisible = false;
+            }
+            else if (!MenuOpened && HasPartInHand && vrController.TriggerButtonUp)
+            {
+                //instPartInHand.AddComponent<Rigidbody>();
+                instPartInHand.transform.parent = null;
+                instPartInHand = null;
+                marbleObjectsSelector.IsPreviewVisible = true;
+            }
+        }
+
+        public bool HasPartInHand
+        {
+            get
+            {
+                return instPartInHand != null;
             }
         }
 

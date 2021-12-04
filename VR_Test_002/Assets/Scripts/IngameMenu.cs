@@ -79,7 +79,16 @@ public class IngameMenu : MonoBehaviour
                 scrollY = vrController.Trackpad.y;
             }
 
-            if (vrController.TrackpadTouchUp)
+            if (vrController.TrackpadSwipeUp)
+            {
+                scroll(true);
+            }
+            else if (vrController.TrackpadSwipeDown)
+            {
+                scroll(false);
+            }
+
+            /*if (vrController.TrackpadTouchUp)
             {
                 float scrollYDelta = scrollY - prevScrollY;
 
@@ -87,7 +96,7 @@ public class IngameMenu : MonoBehaviour
                 {
                     scroll(scrollYDelta > 0f);
                 }
-            }
+            }*/
 
             if (vrController.TrackpadButtonDown)
             {
