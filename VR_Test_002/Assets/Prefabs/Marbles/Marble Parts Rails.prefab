@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1240627690004632936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1240627690004632938}
+  - component: {fileID: 1240627690004632939}
+  m_Layer: 0
+  m_Name: Marble Parts Rails
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1240627690004632938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240627690004632936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240627690004632939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240627690004632936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79a96c6e3b957f439739fc74b47bc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marblePartPrefabs:
+  - prefabSelection: {fileID: 1596723430578838876, guid: 93e4e14eece7fc642bd7bfe3fa2f432d, type: 3}
+    prefabNonConvex: {fileID: 3930014857087356914, guid: 071199bc1b13a4e4d82959fb2f74ca2d, type: 3}
+    prefabThrowing: {fileID: 335042988094803237, guid: 55c3868cc6c3eb34fb413d3b4cff8495, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 4063099374330113721, guid: 3232074955b350d469274b802468313c, type: 3}
+    prefabNonConvex: {fileID: 6936734914389038109, guid: a8870914dd911ee4aa4ccb040a09ed32, type: 3}
+    prefabThrowing: {fileID: 8931010503964926634, guid: b1674ebc578ebfc4aa01fc6f83fcfe93, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 3858671203092157386, guid: da3a1a8476a00904f9685a0de584c489, type: 3}
+    prefabNonConvex: {fileID: 1601594881907647059, guid: bb045dc7e07c26c4795d950300b44cc3, type: 3}
+    prefabThrowing: {fileID: 269557367056641023, guid: 5194359c9323cb74aa57313b92bd6ba1, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8885990386744722767, guid: 64b157c0c5a621541bef6fd6e7c4b2ff, type: 3}
+    prefabNonConvex: {fileID: 5964317119046830766, guid: 32a36c38c33fa164db93aafe6dc6cd4e, type: 3}
+    prefabThrowing: {fileID: 8097656642571009203, guid: ee9d88b7772e05541bff922f599e1f41, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 4213395056146784563, guid: 1bb5ee4bfe830e640b3e709a44e1c665, type: 3}
+    prefabNonConvex: {fileID: 3993283787672939428, guid: d85c17fee7848a142a4c44e8def3f8e6, type: 3}
+    prefabThrowing: {fileID: 5888704743390495991, guid: f163acfa1186f6a48b886aea966e05cc, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 5116727802474979115, guid: 974200275f4be184c8b34d969b36b199, type: 3}
+    prefabNonConvex: {fileID: 6798634770408608133, guid: b1e50205d79e08a47b24baeeca878325, type: 3}
+    prefabThrowing: {fileID: 6448977549270504490, guid: 16b8de16340f9b142804f345e14b9d05, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 3708468185847637579, guid: b8459ec2fcd062040875527e472e0116, type: 3}
+    prefabNonConvex: {fileID: 4235607055635698508, guid: 75e4997a5263ea64aa5926d0adf1bf2b, type: 3}
+    prefabThrowing: {fileID: 4574328597607665966, guid: 86c589148a620c743be4eddabedb6fbf, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 9170467330692122828, guid: 48b6d62d1214c084095ff4fb751932dc, type: 3}
+    prefabNonConvex: {fileID: 143543913325854475, guid: 9e4c45ef722def940a8216e6570d190f, type: 3}
+    prefabThrowing: {fileID: 992495389896154061, guid: ed5fc02909628094498439d9cc8621af, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 536311071460961937, guid: 0ffc82f1f6c672741a106b8ba3e10fa5, type: 3}
+    prefabNonConvex: {fileID: 7321702899926597008, guid: 92ac44780692ae54db679ec150867628, type: 3}
+    prefabThrowing: {fileID: 571057125566418160, guid: c9a088c6bd073cd439322b8957a5f81c, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8648420812329911786, guid: d69234767f5e3e148bdcf5976905cdaa, type: 3}
+    prefabNonConvex: {fileID: 2803530461098924804, guid: 0c7c39717c645c147b22d757bab3b2a5, type: 3}
+    prefabThrowing: {fileID: 5223192570678418322, guid: f493a12f353871043bff280029abf1a4, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 1100270296066595739, guid: 79d7d57eb7f58d24ea538fd106f8859b, type: 3}
+    prefabNonConvex: {fileID: 5187229639183166897, guid: e18f2798ac0d9744a99feaf971142a1c, type: 3}
+    prefabThrowing: {fileID: 4076869530643385385, guid: 3562b61b5b95bc6449b465129d368213, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 5233633942911690724, guid: 56be721b787589b4786f012eac49d79b, type: 3}
+    prefabNonConvex: {fileID: 2639290202242083975, guid: e96360ed7c15e1546a69c3218e34fd9f, type: 3}
+    prefabThrowing: {fileID: 6588530865359861166, guid: 197ae09add797184eaa7f3b33d3333d6, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8232901210719108972, guid: cb84a35ea58e55a44a5bca81489ae1c7, type: 3}
+    prefabNonConvex: {fileID: 1712491162084023867, guid: 0fbdbeac77db95a43984adc73c140f02, type: 3}
+    prefabThrowing: {fileID: 5089203858143190819, guid: deae7bd6ca3fee043985d1b082a05915, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 1808285943020796801, guid: 500eff8cdaf3ed84a9169958f602e0f4, type: 3}
+    prefabNonConvex: {fileID: 8319911339993719691, guid: 90bbe6c21d2182f4ebe13649d9915ed3, type: 3}
+    prefabThrowing: {fileID: 8813647377985048328, guid: e3f9bfb9b4a5b77478b52ee962424837, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 913030478226881350, guid: faac743349d36f544a7776b85a465858, type: 3}
+    prefabNonConvex: {fileID: 1086687939528011851, guid: 03729158c0f5e3b4fbf960b65dd68f4e, type: 3}
+    prefabThrowing: {fileID: 2778016561081805848, guid: 7a5619f643c3d2f42bf4d054a1a19d99, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8126375547922988506, guid: a5a1eb798ab8d7949a1d104567e5c4fc, type: 3}
+    prefabNonConvex: {fileID: 3489274525564554518, guid: e6ca093de1320c549badc3434ba325b4, type: 3}
+    prefabThrowing: {fileID: 107379106830793632, guid: 7cf48d1617fc27242ae614a7e6e01533, type: 3}
+    ownIndex: -1

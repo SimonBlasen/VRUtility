@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7155778829061074129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7155778829061074131}
+  - component: {fileID: 7155778829061074130}
+  m_Layer: 0
+  m_Name: Marble Parts Duplo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7155778829061074131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155778829061074129}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7155778829061074130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155778829061074129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d79a96c6e3b957f439739fc74b47bc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marblePartPrefabs:
+  - prefabSelection: {fileID: 7609497188316573604, guid: a9116abefb8ec3d4db13cebad6ee8996, type: 3}
+    prefabNonConvex: {fileID: 5109929061785051596, guid: 10d3a15e93c43524e8661632dca96cfb, type: 3}
+    prefabThrowing: {fileID: 7609497188316573604, guid: 20d5c7a782b08e24a9fdbd061b9c6a82, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 7010122312713300473, guid: 7b22305b6a42fce439a26d032d62a1ed, type: 3}
+    prefabNonConvex: {fileID: 5111945742220043390, guid: 5e9e314f9629abf479d9ea6a66b72280, type: 3}
+    prefabThrowing: {fileID: 9025922013501491327, guid: 85f2434e8727b5c4b8ed09c4e0576f1b, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 3439243880210651857, guid: 0fa6c7e50bf33524381db4e53b11f2eb, type: 3}
+    prefabNonConvex: {fileID: 3439243880210651857, guid: 7a576adc2b7bc2746aca69e9dff5d134, type: 3}
+    prefabThrowing: {fileID: 3439243880210651857, guid: 470ce022c6faacf46b5d861ac5b8ce3c, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 2969580122204141389, guid: 5956359d9d8460b4b91c4733d15ab0f4, type: 3}
+    prefabNonConvex: {fileID: 8053522285198319226, guid: f4fdc0c29cb91284f9d35835da30bc34, type: 3}
+    prefabThrowing: {fileID: 2969580122204141389, guid: 8576e3b92459bbf40aaf5e1edb95f858, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 6039139132451248079, guid: 95353e8e10471074c9a606595636d09a, type: 3}
+    prefabNonConvex: {fileID: 4016170598633947900, guid: 136d253409d390c43a8b7e4376e51483, type: 3}
+    prefabThrowing: {fileID: 6039139132451248079, guid: afd829dbae02eef48b0d5e34f81c9db6, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 38484095146145401, guid: fc759275169ac4e46a6bdc520720626c, type: 3}
+    prefabNonConvex: {fileID: 4743128167239254875, guid: 1f3a63c26c6a2ee47b287f3e26b58e11, type: 3}
+    prefabThrowing: {fileID: 38484095146145401, guid: 3a094a4e734b3dd4eacfeeeae17c7c29, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 3594054236691800433, guid: 7cc05ce5f5e117f46a7c12569939aa6c, type: 3}
+    prefabNonConvex: {fileID: 3594054236691800433, guid: 5aead2baafef6d145bc3471e1c808a70, type: 3}
+    prefabThrowing: {fileID: 3594054236691800433, guid: 6d745320da874b5419ad4e80934156af, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 4235253992098676349, guid: 4a6787f3cde06a74db49e45349734604, type: 3}
+    prefabNonConvex: {fileID: 6511174509428678078, guid: 001bb1fcb1028ed48969c596719b9b8c, type: 3}
+    prefabThrowing: {fileID: 4235253992098676349, guid: e815b4acd0f6ec54dbe2cff04ca51f05, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 170131894498145818, guid: 957b5c300dad04846b577e4b71640652, type: 3}
+    prefabNonConvex: {fileID: 7771249277853164314, guid: 4008e766a906cad47a901b09e6d38a62, type: 3}
+    prefabThrowing: {fileID: 170131894498145818, guid: 9ed68a94d7d5368478b024f028c3020d, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 2630899292623349802, guid: 87971a0aa7a418b4cab7552a7385e1ce, type: 3}
+    prefabNonConvex: {fileID: 771955096000983118, guid: 93d3ac96509dc64449f649a4a7390fc4, type: 3}
+    prefabThrowing: {fileID: 2630899292623349802, guid: 305c29ba992c6264ca67e77d29e36770, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 9068259381368138196, guid: fd5c253502ca003418542ed02e12e6f2, type: 3}
+    prefabNonConvex: {fileID: 3776135047072368891, guid: f3f7e4a68d1b8ac4d9901f4f872ec67b, type: 3}
+    prefabThrowing: {fileID: 9068259381368138196, guid: 3d5e179acd9b2ed4882006723d2a847b, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8805192329883936800, guid: e6a212914f525f4458ab699cec92ea4d, type: 3}
+    prefabNonConvex: {fileID: 7646372717871745847, guid: e31cbf091d2515c4cba9bb2d4132cd32, type: 3}
+    prefabThrowing: {fileID: 8805192329883936800, guid: d1ae07c8ede2cf34c9d03e1151116687, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 8805192329883936800, guid: 01e4a25f7e268644da1f4ba1178ad82c, type: 3}
+    prefabNonConvex: {fileID: 7646372717871745847, guid: ebd1cc3b8d4fa1f4dabab90598b46642, type: 3}
+    prefabThrowing: {fileID: 8805192329883936800, guid: d589a18df551c2b49975c247e1c85e05, type: 3}
+    ownIndex: -1
+  - prefabSelection: {fileID: 2026110148882139023, guid: bd9b9fa7768515d4e932cf8bcdb10cc0, type: 3}
+    prefabNonConvex: {fileID: 8468935790074936580, guid: b2b7fdf2d04485641942c2d64378528f, type: 3}
+    prefabThrowing: {fileID: 2026110148882139023, guid: a372d7c8be0a98a4ca75666ccd49e07d, type: 3}
+    ownIndex: -1

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum SnapTag
 {
-    BOTTOM, SIDE, TOP
+    BOTTOM, SIDE, TOP, RAIL
 }
 
 public class MarbleTrackPiece : MonoBehaviour

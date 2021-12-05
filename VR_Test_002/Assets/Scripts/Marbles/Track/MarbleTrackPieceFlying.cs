@@ -310,7 +310,7 @@ public class MarbleTrackPieceFlying : MonoBehaviour
             snapToOwnIndex = ownIndex;
             snapToOtherIndex = otherIndex;
         }
-        else
+        else if (tagSelf == SnapTag.BOTTOM || tagSelf == SnapTag.TOP)
         {
             float closestQuatAngle = float.MaxValue;
             Quaternion closestQuat = Quaternion.identity;
@@ -336,6 +336,56 @@ public class MarbleTrackPieceFlying : MonoBehaviour
                 tempMove.transform.rotation = otherPiece.Snaps[otherIndex].rotation;
                 tempMove.transform.Rotate(0f, 180f, 0f);
                 tempMove.transform.Rotate(0f, 0f, 90f * rot);
+
+                snapDestPos = copyThis.transform.position;
+                snapDestRot = copyThis.transform.rotation;
+
+
+                gosToDestroy.Add(copyThis);
+                gosToDestroy.Add(tempMove);
+                gosToDestroy.Add(copyThisSnap);
+
+                float angleHere = Quaternion.Angle(snapDestRot, transform.rotation);
+                if (angleHere < closestQuatAngle)
+                {
+                    closestQuatAngle = angleHere;
+                    closestQuat = snapDestRot;
+                }
+
+
+                mtpToSnap = otherPiece;
+                snapToOwnIndex = ownIndex;
+                snapToOtherIndex = otherIndex;
+            }
+
+            snapDestRot = closestQuat;
+        }
+        else if (tagSelf == SnapTag.RAIL)
+        {
+            float closestQuatAngle = float.MaxValue;
+            Quaternion closestQuat = Quaternion.identity;
+
+            for (int rot = 0; rot < 2; rot++)
+            {
+                GameObject copyThis = new GameObject("Temp 0");
+                GameObject copyThisSnap = new GameObject("Temp 1");
+
+                GameObject tempMove = new GameObject("Temp 2");
+
+                copyThis.transform.position = transform.position;
+                copyThis.transform.rotation = transform.rotation;
+                copyThisSnap.transform.position = snaps[ownIndex].position;
+                copyThisSnap.transform.rotation = snaps[ownIndex].rotation;
+                copyThisSnap.transform.parent = copyThis.transform;
+
+                tempMove.transform.position = copyThisSnap.transform.position;
+                tempMove.transform.rotation = copyThisSnap.transform.rotation;
+                copyThis.transform.parent = tempMove.transform;
+
+                tempMove.transform.position = otherPiece.Snaps[otherIndex].position;
+                tempMove.transform.rotation = otherPiece.Snaps[otherIndex].rotation;
+                tempMove.transform.Rotate(0f, 180f, 0f);
+                tempMove.transform.Rotate(0f, 0f, 180f * rot);
 
                 snapDestPos = copyThis.transform.position;
                 snapDestRot = copyThis.transform.rotation;
@@ -394,7 +444,8 @@ public class MarbleTrackPieceFlying : MonoBehaviour
 
                 if (((piece0.snapTags[i] == SnapTag.SIDE && piece1.SnapTags[j] == SnapTag.SIDE)
                         || (piece0.snapTags[i] == SnapTag.BOTTOM && piece1.SnapTags[j] == SnapTag.TOP)
-                        || (piece0.snapTags[i] == SnapTag.TOP && piece1.SnapTags[j] == SnapTag.BOTTOM))
+                        || (piece0.snapTags[i] == SnapTag.TOP && piece1.SnapTags[j] == SnapTag.BOTTOM)
+                        || (piece0.snapTags[i] == SnapTag.RAIL && piece1.SnapTags[j] == SnapTag.RAIL))
                     &&
 
                     distanceHere < closestDistance && (180f - angle) <= threshAngle
