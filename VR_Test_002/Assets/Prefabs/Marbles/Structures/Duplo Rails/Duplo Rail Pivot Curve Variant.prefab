@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1446574217342285031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1016208473702558418, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_Name
+      value: Duplo Rail Pivot Curve Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110348481080862339, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0038
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110348481277380097, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0038
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.03962499
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4694684684016391975, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 255d463229429db41854a74edfc5e2ad, type: 3}
