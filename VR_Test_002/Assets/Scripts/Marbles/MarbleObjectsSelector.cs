@@ -46,6 +46,7 @@ public class MarbleObjectsSelector : MonoBehaviour
     private bool isVisible = false;
     private Transform[] instances = null;
     private int[] instancesSelRotations = null;
+    private bool[] instancesSelUpDownFlip = null;
     private Transform[] instanceParents = null;
 
     private float moveS = 0f;
@@ -70,6 +71,7 @@ public class MarbleObjectsSelector : MonoBehaviour
     {
         instances = new Transform[MarbleParts.Inst.MarblePartPrefabs.Length];
         instancesSelRotations = new int[MarbleParts.Inst.MarblePartPrefabs.Length];
+        instancesSelUpDownFlip = new bool[MarbleParts.Inst.MarblePartPrefabs.Length];
         instanceParents = new Transform[MarbleParts.Inst.MarblePartPrefabs.Length];
 
         for (int i = 0; i < instances.Length; i++)
@@ -101,6 +103,7 @@ public class MarbleObjectsSelector : MonoBehaviour
             }
 
             instancesSelRotations[i] = 0;
+            instancesSelUpDownFlip[i] = false;
         }
 
         anglePerObject = Mathf.PI * 2f / instances.Length;
@@ -173,7 +176,7 @@ public class MarbleObjectsSelector : MonoBehaviour
             if (i == IndexInFront)
             {
                 instances[i].localScale = Vector3.Lerp(new Vector3(1f, 1f, 1f), new Vector3(objectsScale, objectsScale, objectsScale), scaleCurve.Evaluate(lerpS));
-                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, additionalRotation * Quaternion.Euler(0f, instancesSelRotations[i] * 90f, 0f), Time.deltaTime * rotateLerpSpeed);
+                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, additionalRotation * Quaternion.Euler(instancesSelUpDownFlip[i] ? 180f : 0f, instancesSelRotations[i] * 90f, 0f), Time.deltaTime * rotateLerpSpeed);
 
                 Vector3 scaleMenuOpen = Vector3.Lerp(instanceParents[i].localScale, new Vector3(scaleupInFront, scaleupInFront, scaleupInFront), Time.deltaTime * scaleupInFrontLerpSpeed);
                 Vector3 scaleMenuClosed = Vector3.Lerp(Vector3.zero, new Vector3(scaleupCurSelected, scaleupCurSelected, scaleupCurSelected), moveCurve.Evaluate(scaleSelectedVisibleS));
@@ -184,7 +187,7 @@ public class MarbleObjectsSelector : MonoBehaviour
             else
             {
                 instances[i].localScale = new Vector3(objectsScale, objectsScale, objectsScale) * scaleCurve.Evaluate(lerpS);
-                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, Quaternion.identity * Quaternion.Euler(0f, instancesSelRotations[i] * 90f, 0f), Time.deltaTime * rotateLerpSpeed);
+                instances[i].localRotation = Quaternion.Lerp(instances[i].localRotation, Quaternion.identity * Quaternion.Euler(instancesSelUpDownFlip[i] ? 180f : 0f, instancesSelRotations[i] * 90f, 0f), Time.deltaTime * rotateLerpSpeed);
                 instanceParents[i].localScale = Vector3.Lerp(instanceParents[i].localScale, new Vector3(1f, 1f, 1f), Time.deltaTime * scaleupInFrontLerpSpeed);
             }
 
@@ -273,6 +276,11 @@ public class MarbleObjectsSelector : MonoBehaviour
                 instancesSelRotations[IndexInFront] = 3;
             }
         }
+    }
+
+    public void RotateSelectedObjectUpDown()
+    {
+        instancesSelUpDownFlip[IndexInFront] = !instancesSelUpDownFlip[IndexInFront];
     }
 
     public float SelectedPartRotation

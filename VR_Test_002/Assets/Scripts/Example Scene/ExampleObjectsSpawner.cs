@@ -56,6 +56,7 @@ public class ExampleObjectsSpawner : MonoBehaviour
         if (instObj.GetComponent<Rigidbody>() != null)
         {
             instObj.GetComponent<Rigidbody>().maxAngularVelocity = float.PositiveInfinity;
+            instObj.GetComponent<Rigidbody>().isKinematic = true;
         }
         instObj.transform.position = spawnPos.position;
 

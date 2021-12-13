@@ -64,6 +64,14 @@ namespace Marbles
                 {
                     marbleObjectsSelector.RotateSelectedObject(false);
                 }
+                if (vrController.TrackpadSwipeDown)
+                {
+                    //marbleObjectsSelector.RotateSelectedObjectUpDown();
+                }
+                else if (vrController.TrackpadSwipeUp)
+                {
+                    //marbleObjectsSelector.RotateSelectedObjectUpDown();
+                }
             }
 
 
