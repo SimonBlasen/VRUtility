@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3357449577635805774}
   - component: {fileID: 7278921959368270017}
   - component: {fileID: 1887413516086021047}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turn Trigger Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 4313627270263502938}
   - component: {fileID: 3422947715574305942}
   - component: {fileID: 5068609804090681865}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turn Trigger Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 6042879125623621020}
   - component: {fileID: 3759366776041435839}
   - component: {fileID: 9019300846542312378}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turn Trigger Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,6 +704,20 @@ Transform:
   m_Father: {fileID: 7730514851916884640}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -18, z: 0}
+--- !u!64 &3239920084340643292
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045037038631505131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5221963080773851136, guid: a83715f6db052134a9063a89e3a1d8d0, type: 3}
 --- !u!1 &8331474174942632702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,6 +1442,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a83715f6db052134a9063a89e3a1d8d0, type: 3}
+--- !u!1 &9045037038631505131 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a83715f6db052134a9063a89e3a1d8d0, type: 3}
+  m_PrefabInstance: {fileID: 8162497876756066746}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8560707301052356177 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a83715f6db052134a9063a89e3a1d8d0, type: 3}

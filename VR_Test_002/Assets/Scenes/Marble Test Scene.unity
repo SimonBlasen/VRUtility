@@ -7742,6 +7742,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2860072524028728826, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.00024
+      objectReference: {fileID: 0}
     - target: {fileID: 6249118380269572854, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
       propertyPath: m_Name
       value: Duplo UpBend Static
@@ -7752,15 +7756,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6249118380269572855, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.35746697
       objectReference: {fileID: 0}
     - target: {fileID: 6249118380269572855, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.179
+      value: 0.821
       objectReference: {fileID: 0}
     - target: {fileID: 6249118380269572855, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.259
+      value: 0.54685396
       objectReference: {fileID: 0}
     - target: {fileID: 6249118380269572855, guid: 56cfefe3d1355af40a43fb8fdba9fb51, type: 3}
       propertyPath: m_LocalRotation.w
