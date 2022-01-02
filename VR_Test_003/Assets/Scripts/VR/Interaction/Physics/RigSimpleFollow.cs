@@ -6,6 +6,10 @@ public class RigSimpleFollow : MonoBehaviour
 {
     [SerializeField]
     private Transform target = null;
+    [SerializeField]
+    private bool followPosition = false;
+    [SerializeField]
+    private bool followRotation = false;
 
     private Rigidbody rig = null;
 
@@ -16,8 +20,15 @@ public class RigSimpleFollow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        rig.MovePosition(target.position);
+        if (followPosition)
+        {
+            rig.MovePosition(target.position);
+        }
+        if (followRotation)
+        {
+            rig.MoveRotation(target.rotation);
+        }
     }
 }
