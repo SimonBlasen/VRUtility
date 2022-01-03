@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactDistance: 0.1
-  forceMultiPos: 4
+  forceMultiPos: 1
   forceMultiRot: 0
   followPosition: 1
   followRotation: 0

@@ -77,7 +77,10 @@ public class VRControllerTeleport : MonoBehaviour
             teleportLines.IsVisible = false;
             teleportTarget.IsVisible = false;
 
-            teleportPlayer();
+            if (!teleportTarget.IsRed)
+            {
+                teleportPlayer();
+            }
         }
 
         if (isTargeting)
