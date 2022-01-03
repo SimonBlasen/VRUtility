@@ -122,9 +122,9 @@ public class ViveController : VRController
 
     private void updateBatteryLevel()
     {
-        textMeshBatteryLevel.text = AngularVelocity.x.ToString("n3") + "\n"
+        /*textMeshBatteryLevel.text = AngularVelocity.x.ToString("n3") + "\n"
                                      + AngularVelocity.y.ToString("n3") + "\n"
-                                     + AngularVelocity.z.ToString("n3");
+                                     + AngularVelocity.z.ToString("n3");*/
 
         //textMeshBatteryLevel.text = BatteryLevel.ToString("n5");
     }

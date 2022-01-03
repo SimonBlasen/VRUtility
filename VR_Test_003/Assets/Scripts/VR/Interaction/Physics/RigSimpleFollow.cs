@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class RigSimpleFollow : MonoBehaviour
 {
-    [SerializeField]
-    private Transform target = null;
-    [SerializeField]
-    private bool followPosition = false;
-    [SerializeField]
-    private bool followRotation = false;
+    public Transform Target
+    { get; set; } = null;
+
+    public bool FollowPosition
+    { get; set; } = false;
+    public bool FollowRotation
+    { get; set; } = false;
 
     private Rigidbody rig = null;
 
@@ -22,13 +23,13 @@ public class RigSimpleFollow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (followPosition)
+        if (FollowPosition)
         {
-            rig.MovePosition(target.position);
+            rig.MovePosition(Target.position);
         }
-        if (followRotation)
+        if (FollowRotation)
         {
-            rig.MoveRotation(target.rotation);
+            rig.MoveRotation(Target.rotation);
         }
     }
 }

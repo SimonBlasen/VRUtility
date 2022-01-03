@@ -18,6 +18,8 @@
 /VR_Test_003/[Ll]ogs/
 /VR_Test_003/[Mm]emoryCaptures/
 
+/VR_Test_003/Assets/polyperfect/
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 

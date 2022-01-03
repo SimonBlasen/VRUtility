@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class VRInteractableHinge : VRInteractable
 {
+    [Header("Settings")]
     [SerializeField]
-    private float forceMulti = 1f;
+    private float forceMultiPos = 1f;
+    [SerializeField]
+    private float forceMultiRot = 1f;
+    [SerializeField]
+    private bool followPosition = false;
+    [SerializeField]
+    private bool followRotation = false;
+
+    [Space]
+
+    [Header("References")]
+    [SerializeField]
+    private Transform fixedJointPosition = null;
 
     private Transform grabbedControllerPivot = null;
 
@@ -19,6 +32,8 @@ public class VRInteractableHinge : VRInteractable
     private Vector3 grabStartPosOffset = Vector3.zero;
     private Quaternion grabStartRotOffset = Quaternion.identity;
 
+    private GameObject instFixedJoint = null;
+
     protected new void Start()
     {
         base.Start();
@@ -27,8 +42,8 @@ public class VRInteractableHinge : VRInteractable
         oldParentPos = transform.localPosition;
         oldParentRot = transform.localRotation;
 
-        rigidbodyFollower = transform.parent.GetComponent<RigSimpleFollow>().GetComponent<Rigidbody>();
-        attachedRig = rigidbodyFollower.GetComponent<FixedJoint>().connectedBody;
+        //rigidbodyFollower = transform.parent.GetComponent<RigSimpleFollow>().GetComponent<Rigidbody>();
+        attachedRig = transform.parent.GetComponent<Rigidbody>();
     }
 
 
@@ -52,6 +67,24 @@ public class VRInteractableHinge : VRInteractable
 
         grabStartPosOffset = transform.position - grabbedControllerPivot.position;
         grabStartRotOffset = Quaternion.Inverse(grabbedControllerPivot.rotation) * transform.rotation;
+
+        if (instFixedJoint != null)
+        {
+            Destroy(instFixedJoint);
+            instFixedJoint = null;
+        }
+
+        instFixedJoint = new GameObject("Fixed Joint");
+        instFixedJoint.transform.position = fixedJointPosition.position;
+        instFixedJoint.transform.rotation = fixedJointPosition.rotation;
+        instFixedJoint.AddComponent<Rigidbody>();
+        FixedJoint fixedJoint = instFixedJoint.AddComponent<FixedJoint>();
+        fixedJoint.connectedBody = attachedRig;
+
+        RigSimpleFollow rigSimpleFollow = instFixedJoint.AddComponent<RigSimpleFollow>();
+        rigSimpleFollow.FollowPosition = followPosition;
+        rigSimpleFollow.FollowRotation = followRotation;
+        rigSimpleFollow.Target = transform;
     }
 
     public override void DeInteract(VRController vrController)
@@ -67,10 +100,17 @@ public class VRInteractableHinge : VRInteractable
         //rigidbodyFollower.transform.position = transform.position;
 
 
+        if (instFixedJoint != null)
+        {
+            Destroy(instFixedJoint);
+            instFixedJoint = null;
+        }
+
         (Vector3 velocity, Vector3 angularVelocity) = vrController.VRControllerInteract.VelocitiesAtPivot();
 
 
-        attachedRig.AddForceAtPosition(velocity * forceMulti, rigidbodyFollower.position, ForceMode.VelocityChange);
+        attachedRig.AddForceAtPosition(velocity * forceMultiPos, fixedJointPosition.position, ForceMode.VelocityChange);
+        attachedRig.AddTorque(angularVelocity * forceMultiRot, ForceMode.VelocityChange);
 
         //rigidbodyFollower.velocity = velocity;
         //rigidbodyFollower.angularVelocity = angularVelocity;
