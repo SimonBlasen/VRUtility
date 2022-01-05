@@ -6,6 +6,10 @@ public class TransformFollow : MonoBehaviour
 {
     [SerializeField]
     private Transform followTransform = null;
+    [SerializeField]
+    private bool followPosition = true;
+    [SerializeField]
+    private bool followRotation = true;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +20,13 @@ public class TransformFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = followTransform.position;
-        transform.rotation = followTransform.rotation;
+        if (followPosition)
+        {
+            transform.position = followTransform.position;
+        }
+        if (followRotation)
+        {
+            transform.rotation = followTransform.rotation;
+        }
     }
 }

@@ -179,7 +179,12 @@ public class VRControllerInteract : MonoBehaviour
     public (Vector3 velocity, Vector3 angularVelocity) VelocitiesAtPivot()
     {
         float smoothTime = 0.0f;
-        Vector3 velocityForward = Vector3.Cross(vrController.AngularVelocity, ItemInHAnd.position - vrController.CenterOfMass);
+        Vector3 itemPos = interactPivot.position;
+        if (ItemInHAnd != null)
+        {
+            itemPos = ItemInHAnd.position;
+        }
+        Vector3 velocityForward = Vector3.Cross(vrController.AngularVelocity, itemPos - vrController.CenterOfMass);
         return (velocityForward + vrController.VelocitySmoothed(smoothTime), vrController.AngularVelocitySmoothed(smoothTime));
     }
 

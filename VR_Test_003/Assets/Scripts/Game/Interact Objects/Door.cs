@@ -16,6 +16,8 @@ namespace Game.InteractObjects
         private Transform nearClosedTransform = null;
         [SerializeField]
         private Transform audioClipPosition = null;
+        [SerializeField]
+        private VRInteractableTouch doorKnockInteract = null;
 
         [Space]
 
@@ -33,7 +35,11 @@ namespace Game.InteractObjects
         [SerializeField]
         private AudioClip clipDoorClose = null;
         [SerializeField]
+        private AudioClip clipDoorKnock = null;
+        [SerializeField]
         private AnimationCurve doorSoundVolumeCurve = null;
+        [SerializeField]
+        private AnimationCurve doorKnockSoundVolumeCurve = null;
 
         private bool _wasDoorGrabbed = false;
         private HingeJoint _hingeJoint = null;
@@ -50,6 +56,20 @@ namespace Game.InteractObjects
         {
             _doorRig = doorTransform.GetComponent<Rigidbody>();
             _hingeJoint = doorTransform.GetComponent<HingeJoint>();
+
+            doorKnockInteract.TriggerTouch += DoorKnockInteract_TriggerTouch;
+        }
+
+        private void DoorKnockInteract_TriggerTouch(VRController vrController)
+        {
+            float volume = doorKnockSoundVolumeCurve.Evaluate(vrController.VRControllerInteract.VelocitiesAtPivot().velocity.magnitude);
+            //volume *= vrController.Trigger;
+
+            if (vrController.Trigger >= 0.5f)
+            {
+                AudioManager.Play(clipDoorKnock, volume, true, vrController.VRControllerInteract.InteractPivot.position);
+            }
+
         }
 
         // Update is called once per frame

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,10 +12,25 @@ namespace Game.Characters
         SITTING, WALK
     }
 
+    public enum CharacterAnimAction
+    {
+        IDLE, TEXTING, DEATH, WAVING, PUNCH_LEFT, PUNCH_RIGHT, RUNNING, WALK, KICK
+    }
+
     public class Character : MonoBehaviour
     {
         [SerializeField]
-        private 
+        private CharAnimControllerState[] overrideStates = null;
+        [SerializeField]
+        protected float navMeshReachDestinationDistance = 0.3f;
+
+
+        [Space]
+
+        [Header("Anim Settings")]
+        [SerializeField]
+        private float moveSpeedWalkAnim = 1f;
+
 
         protected NavMeshAgent _navAgent = null;
 
@@ -25,11 +42,20 @@ namespace Game.Characters
         {
             _animator = GetComponent<Animator>();
             _navAgent = GetComponent<NavMeshAgent>();
+
+            _navAgent.stoppingDistance = 0.1f;
         }
 
         protected virtual void Update()
         {
-
+            if (_navAgent.velocity.magnitude >= moveSpeedWalkAnim)
+            {
+                _animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                _animator.SetBool("isWalking", false);
+            }
         }
 
         public void WalkTo(Vector3 position)
@@ -45,11 +71,37 @@ namespace Game.Characters
             }
             set
             {
+                CharacterAnimOverride oldAnimState = _curAnimState;
                 _curAnimState = value;
 
-                //_animator.set
+                if (oldAnimState != _curAnimState)
+                {
+                    _animator.runtimeAnimatorController = getAnimControllerStateByAnimOverride(_curAnimState).animatorController;
+                }
             }
+        }
+
+        private CharAnimControllerState getAnimControllerStateByAnimOverride(CharacterAnimOverride animOverride)
+        {
+            for (int i = 0; i < overrideStates.Length; i++)
+            {
+                if (overrideStates[i].stateType == animOverride)
+                {
+                    return overrideStates[i];
+                }
+            }
+            return null;
         }
     }
 
+
+
+    [Serializable]
+    public class CharAnimControllerState
+    {
+        [SerializeField]
+        public CharacterAnimOverride stateType;
+        [SerializeField]
+        public RuntimeAnimatorController animatorController;
+    }
 }
