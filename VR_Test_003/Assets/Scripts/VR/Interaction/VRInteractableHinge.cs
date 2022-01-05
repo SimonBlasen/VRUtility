@@ -62,6 +62,8 @@ public class VRInteractableHinge : VRInteractable
     {
         base.Interact(vrController);
 
+        IsGrabbed = true;
+
         transform.parent = null;
         grabbedControllerPivot = vrController.VRControllerInteract.InteractPivot;
 
@@ -91,6 +93,8 @@ public class VRInteractableHinge : VRInteractable
     {
         base.DeInteract(vrController);
 
+        IsGrabbed = false;
+
         grabbedControllerPivot = null;
 
         transform.parent = oldParent;
@@ -109,6 +113,8 @@ public class VRInteractableHinge : VRInteractable
         (Vector3 velocity, Vector3 angularVelocity) = vrController.VRControllerInteract.VelocitiesAtPivot();
 
 
+        attachedRig.velocity = Vector3.zero;
+        attachedRig.angularVelocity = Vector3.zero;
         attachedRig.AddForceAtPosition(velocity * forceMultiPos, fixedJointPosition.position, ForceMode.VelocityChange);
         attachedRig.AddTorque(angularVelocity * forceMultiRot, ForceMode.VelocityChange);
 
@@ -118,4 +124,9 @@ public class VRInteractableHinge : VRInteractable
         //Rigidbody.velocity = velocity;
         //Rigidbody.angularVelocity = angularVelocity;
     }
+
+    public bool IsGrabbed
+    {
+        get; protected set;
+    } = false;
 }

@@ -151,7 +151,7 @@ public class VRControllerTeleport : MonoBehaviour
 
                 teleportTarget.IsVisible = true;
 
-                if (hit.transform.tag != "BlockTeleportation")
+                if (hit.collider.tag != "BlockTeleportation")
                 {
                     teleportTarget.IsRed = false;
                     teleportLines.IsRed = false;

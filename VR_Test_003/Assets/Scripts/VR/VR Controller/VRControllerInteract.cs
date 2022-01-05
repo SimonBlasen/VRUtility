@@ -199,4 +199,10 @@ public class VRControllerInteract : MonoBehaviour
         InteractableInHand = vrInteractableGrab;
         //InteractableInHand.PerformGrab(VRController);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(interactPivot.position, 0.2f);
+    }
 }
