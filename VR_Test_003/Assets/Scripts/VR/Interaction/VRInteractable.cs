@@ -6,6 +6,8 @@ public class VRInteractable : MonoBehaviour, VRControllerInit
 {
     [SerializeField]
     protected float interactDistance = 0.1f;
+    [SerializeField]
+    private Collider interactCollider = null;
 
     protected VRController[] vrControllers = new VRController[2];
 
@@ -100,6 +102,18 @@ public class VRInteractable : MonoBehaviour, VRControllerInit
         set
         {
             isInteractable = value;
+        }
+    }
+
+    public float DistanceTo(Vector3 worldPosition)
+    {
+        if (interactCollider == null)
+        {
+            return Vector3.Distance(transform.position, worldPosition);
+        }
+        else
+        {
+            return Vector3.Distance(interactCollider.ClosestPoint(worldPosition), worldPosition);
         }
     }
 }

@@ -36,7 +36,8 @@ public class VRControllerInteract : MonoBehaviour
             {
                 if (vrInteractables[i].IsInteractable)
                 {
-                    float distance = Vector3.Distance(interactPivot.position, vrInteractables[i].transform.position);
+                    float distance = vrInteractables[i].DistanceTo(interactPivot.position);
+                    //float distance = Vector3.Distance(interactPivot.position, vrInteractables[i].transform.position);
                     if (distance < closestDistance)
                     {
                         closestDistance = distance;
