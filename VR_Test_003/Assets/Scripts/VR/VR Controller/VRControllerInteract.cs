@@ -176,6 +176,13 @@ public class VRControllerInteract : MonoBehaviour
         }
     }
 
+    public (Vector3 velocity, Vector3 angularVelocity) VelocitiesAtPivot(Vector3 itemWorldPosMid)
+    {
+        float smoothTime = 0.0f;
+        Vector3 velocityForward = Vector3.Cross(vrController.AngularVelocity, itemWorldPosMid - vrController.CenterOfMass);
+        return (velocityForward + vrController.VelocitySmoothed(smoothTime), vrController.AngularVelocitySmoothed(smoothTime));
+    }
+
     public (Vector3 velocity, Vector3 angularVelocity) VelocitiesAtPivot()
     {
         float smoothTime = 0.0f;
@@ -184,8 +191,8 @@ public class VRControllerInteract : MonoBehaviour
         {
             itemPos = ItemInHAnd.position;
         }
-        Vector3 velocityForward = Vector3.Cross(vrController.AngularVelocity, itemPos - vrController.CenterOfMass);
-        return (velocityForward + vrController.VelocitySmoothed(smoothTime), vrController.AngularVelocitySmoothed(smoothTime));
+
+        return VelocitiesAtPivot(itemPos);
     }
 
 

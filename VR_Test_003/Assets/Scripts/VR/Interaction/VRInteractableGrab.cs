@@ -118,7 +118,7 @@ public class VRInteractableGrab : VRInteractable
 
         RelaseGrab(vrController);
 
-        (Vector3 velocity, Vector3 angularVelocity) = vrController.VRControllerInteract.VelocitiesAtPivot();
+        (Vector3 velocity, Vector3 angularVelocity) = vrController.VRControllerInteract.VelocitiesAtPivot(transform.TransformPoint(Rigidbody.centerOfMass));
         Rigidbody.velocity = velocity;
         Rigidbody.angularVelocity = angularVelocity;
     }
