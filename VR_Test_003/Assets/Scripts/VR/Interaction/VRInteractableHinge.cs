@@ -53,8 +53,8 @@ public class VRInteractableHinge : VRInteractable
 
         if (grabbedControllerPivot != null)
         {
-            transform.position = Quaternion.Inverse(grabStartRotOffset) * grabbedControllerPivot.rotation * grabStartPosOffset + grabbedControllerPivot.position;
             transform.rotation = grabbedControllerPivot.rotation * grabStartRotOffset;
+            transform.position = grabbedControllerPivot.rotation * grabStartRotOffset * Quaternion.Inverse(transform.rotation) * grabStartPosOffset + grabbedControllerPivot.position;
         }
     }
 
