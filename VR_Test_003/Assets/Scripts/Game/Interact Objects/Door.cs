@@ -106,12 +106,12 @@ namespace Game.InteractObjects
 
             }
 
-            if (_lastAngles != doorTransform.rotation.eulerAngles)
+            if (_lastAngles != doorTransform.localRotation.eulerAngles)
             {
                 int signNow = 0;
-                float signX = Mathf.Sign(doorTransform.rotation.eulerAngles.x - soundAngleThresh.x);
-                float signY = Mathf.Sign(doorTransform.rotation.eulerAngles.y - soundAngleThresh.y);
-                float signZ = Mathf.Sign(doorTransform.rotation.eulerAngles.z - soundAngleThresh.z);
+                float signX = Mathf.Sign(doorTransform.localRotation.eulerAngles.x - soundAngleThresh.x);
+                float signY = Mathf.Sign(doorTransform.localRotation.eulerAngles.y - soundAngleThresh.y);
+                float signZ = Mathf.Sign(doorTransform.localRotation.eulerAngles.z - soundAngleThresh.z);
                 if (signX != Mathf.Sign(_lastAngles.x - soundAngleThresh.x))
                 {
                     signNow = (int)signX;
@@ -126,7 +126,7 @@ namespace Game.InteractObjects
                 }
                 if (signNow != 0)
                 {
-                    float curAngularVel = (doorTransform.rotation.eulerAngles - _lastAngles).magnitude;
+                    float curAngularVel = (doorTransform.localRotation.eulerAngles - _lastAngles).magnitude;
                     Debug.Log("Door ang vel: " + curAngularVel.ToString("n2"));
 
                     // TODO Play sound
@@ -146,7 +146,7 @@ namespace Game.InteractObjects
                     Debug.Log("Door sound");
                 }
 
-                _lastAngles = doorTransform.rotation.eulerAngles;
+                _lastAngles = doorTransform.localRotation.eulerAngles;
             }
         }
 

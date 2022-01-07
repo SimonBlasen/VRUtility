@@ -282,7 +282,7 @@ MonoBehaviour:
   nearClosedAngleThresh: 10
   snapP: -20
   snapD: 1
-  soundAngleThresh: {x: -1000, y: 95, z: -1000}
+  soundAngleThresh: {x: -1000, y: 5, z: -1000}
   clipDoorOpen: {fileID: 8300000, guid: fc2fc4d06aa20834eb8e8aa999da25e6, type: 3}
   clipDoorClose: {fileID: 8300000, guid: 9f14a4106c751ea43aff4505f1ff51c3, type: 3}
   clipDoorKnock: {fileID: 8300000, guid: a064c7e238fbd484186ec77ff473314a, type: 3}
