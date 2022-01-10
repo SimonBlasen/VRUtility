@@ -128,7 +128,11 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 5850786133115277947, guid: 384a84da2cfe09b409cb56c532f05169, type: 2}
+  - {fileID: -7158544381507179892, guid: 204ca0ed79a18dd47a328a0276509039, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -145,7 +149,8 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.DefaultCompany.VRTest003
   buildNumber:
     Standalone: 0
     iPhone: 0
