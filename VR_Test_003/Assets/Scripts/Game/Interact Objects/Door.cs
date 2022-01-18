@@ -15,6 +15,10 @@ namespace Game.InteractObjects
         [SerializeField]
         private Transform nearClosedTransform = null;
         [SerializeField]
+        private Transform exactlyClosedTransform = null;
+        [SerializeField]
+        private Transform exactlyOpenedTransform = null;
+        [SerializeField]
         private Transform audioClipPosition = null;
         [SerializeField]
         private VRInteractableTouch doorKnockInteract = null;
@@ -29,6 +33,8 @@ namespace Game.InteractObjects
         [SerializeField]
         private float snapD = 1f;
         [SerializeField]
+        private float stopMotorErrorThresh = 0.01f;
+        [SerializeField]
         private Vector3 soundAngleThresh = Vector3.zero;
         [SerializeField]
         private AudioClip clipDoorOpen = null;
@@ -40,6 +46,10 @@ namespace Game.InteractObjects
         private AnimationCurve doorSoundVolumeCurve = null;
         [SerializeField]
         private AnimationCurve doorKnockSoundVolumeCurve = null;
+        [SerializeField]
+        private AnimationCurve aiOpenDoorCurve = null;
+        [SerializeField]
+        private float aiOpenDoorTime = 1f;
 
         private bool _wasDoorGrabbed = false;
         private HingeJoint _hingeJoint = null;
@@ -50,6 +60,10 @@ namespace Game.InteractObjects
 
         public delegate void DoorOpenCloseEvent(bool opened, float force);
         public event DoorOpenCloseEvent DoorOpenClose;
+
+
+        public bool debugDoorOpen = false;
+        public bool debugDoorClose = false;
 
         // Start is called before the first frame update
         void Start()
@@ -75,6 +89,17 @@ namespace Game.InteractObjects
         // Update is called once per frame
         void Update()
         {
+            if (debugDoorClose)
+            {
+                debugDoorClose = false;
+                ForceDoorState(false);
+            }
+            else if (debugDoorOpen)
+            {
+                debugDoorOpen = false;
+                ForceDoorState(true);
+            }
+
             if (_wasDoorGrabbed != interactableHinge.IsGrabbed)
             {
                 _wasDoorGrabbed = interactableHinge.IsGrabbed;
@@ -94,7 +119,28 @@ namespace Game.InteractObjects
 
             if (_hingeJoint.useMotor)
             {
-                float error = Quaternion.Angle(nearClosedTransform.rotation, doorTransform.rotation);
+                float error = 0f;
+
+                // Player is nearly closing door
+                if (!_isForcingDoorState)
+                {
+                    error = Quaternion.Angle(nearClosedTransform.rotation, doorTransform.rotation);
+                }
+
+                // AI is forcing door open or close
+                /*else
+                {
+                    if (_forceDoorOpen)
+                    {
+                        error = -Quaternion.Angle(nearOpenedTransform.rotation, doorTransform.rotation);
+                    }
+                    else
+                    {
+                        error = Quaternion.Angle(nearClosedTransform.rotation, doorTransform.rotation);
+                    }
+                }*/
+
+
 
                 float u = error * snapP + (error - _lastDoorError) * snapD;
 
@@ -103,6 +149,30 @@ namespace Game.InteractObjects
                 _hingeJoint.motor = jointMotor;
 
                 _lastDoorError = error;
+
+                /*if (Mathf.Abs(error) <= stopMotorErrorThresh)
+                {
+                    Debug.Log("Stopped door motor due to error thresh");
+
+                    _hingeJoint.useMotor = false;
+                    _isForcingDoorState = false;
+                }*/
+
+            }
+
+            if (_isForcingDoorState)
+            {
+                _forceDoorAnimS += Time.deltaTime / aiOpenDoorTime;
+
+                _forceDoorAnimS = Mathf.Clamp(_forceDoorAnimS, 0f, 1f);
+                float curveS = _forceDoorOpen ? _forceDoorAnimS : 1f - _forceDoorAnimS;
+
+                doorTransform.rotation = Quaternion.Lerp(exactlyClosedTransform.rotation, exactlyOpenedTransform.rotation, aiOpenDoorCurve.Evaluate(curveS));
+
+                if (_forceDoorAnimS >= 1f)
+                {
+                    _isForcingDoorState = false;
+                }
 
             }
 
@@ -154,6 +224,18 @@ namespace Game.InteractObjects
         {
             get; protected set;
         } = false;
+
+        private bool _isForcingDoorState = false;
+        private bool _forceDoorOpen = false;
+        private float _forceDoorAnimS = 0f;
+
+        public void ForceDoorState(bool opened)
+        {
+            _forceDoorOpen = opened;
+            _isForcingDoorState = true;
+            _forceDoorAnimS = 0f;
+
+        }
     }
 
 }
